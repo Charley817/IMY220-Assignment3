@@ -129,15 +129,18 @@
 								<h2>Image Gallery</h2>
 								<div class = 'row imageGallery'>";
 
-								$queryGal = "SELECT * FROM dbUser.tbgallery WHERE user_id = '$resSelect'";
+								$queryGal = "SELECT filename FROM dbUser.tbgallery WHERE user_id = '$resSelect'";
 								$resGal = mysqli_query($mysqli, $queryGal);
 								if($resGal && mysqli_num_rows($resGal) > 0){
-									while (mysqli_fetch_assoc($resGal) != null)
+									$rowGal = mysqli_fetch_assoc($resGal);
+									while ($rowGal != null)
 									{
-											$rowGal = mysqli_fetch_assoc($resGal);
 											$filename = $rowGal['filename'];
-											$filepath = "uploads/$filename";
-											echo" <div class='col-3' style='background-image: url($filepath)'> </div>";
+											$filepath = "../uploads/$filename";
+											?>
+											<div class='col-3' style='background-image: url(<?php echo "'$filepath'" ?>)'>here</div>
+											<?php
+											$rowGal = mysqli_fetch_assoc($resGal);
 									}
 								}
 
